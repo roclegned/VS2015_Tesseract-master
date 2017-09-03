@@ -152,8 +152,8 @@ void TransferImagesGetComponent(char * fileName)
 
 int main()
 {
+	Pix *image = pixRead("F:\\CodeSpace\\GitHub\\VS2015_Tesseract-master\\Release\\00004.song.001.bmp");
 	tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
-	Pix *image = pixRead("D:\\WorkSpace\\DEMO\\GitHub\\VS2015_Tesseract-master\\Debug\\00004.song.001.bmp");	
 	api->Init(NULL, "eng");
 	api->SetImage(image);
 	Boxa* boxes = api->GetComponentImages(tesseract::RIL_TEXTLINE, true, NULL, NULL);

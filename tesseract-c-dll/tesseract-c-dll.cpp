@@ -5,6 +5,7 @@
 #include "allheaders.h"
 #include "baseapi.h"
 #include "dict.h"
+#include "publictypes.h"
 
 #define EXPORT_API  extern "C" __declspec(dllexport)
 
@@ -115,6 +116,48 @@ EXPORT_API bool  TessBasicOCR(char * fileName, char ** outText)
 	pixDestroy(&image);
 	return true;
 }
+
+EXPORT_API   Boxa * TessGetComponentImagesFromFile(char * fileName, const tesseract::PageIteratorLevel level, const bool text_only, Pixa** pixa, int** blockids)
+{
+	if (nullptr == api || NULL == fileName)
+	{
+		fprintf(stderr, "tesseract object is null.\n");
+		return NULL;
+	}
+	Pix *image = pixRead(fileName);
+	api->SetImage(image);
+	return api->GetComponentImages(level, text_only, pixa, blockids);
+}
+
+
+EXPORT_API   Boxa * TessGetComponentImages(const tesseract::PageIteratorLevel level, const bool text_only, Pixa** pixa, int** blockids)
+{
+	if (nullptr == api)
+	{
+		fprintf(stderr, "tesseract object is null.\n");
+		return NULL;
+	}
+	return api->GetComponentImages(level, text_only, pixa, blockids);
+}
+
+
+
+EXPORT_API BOX * TessBoxaGetBox(BOXA *boxa, l_int32  index, l_int32  accessflag)
+{
+	return boxaGetBox(boxa, index, accessflag);
+}
+
+EXPORT_API PIX * TessPixaGetPix(PIXA *pixa, l_int32  index, l_int32  accesstype)
+{
+	return pixaGetPix(pixa, index, accesstype);
+}
+
+
+
+
+
+
+
 
 
 
