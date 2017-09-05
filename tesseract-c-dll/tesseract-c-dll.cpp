@@ -117,7 +117,7 @@ EXPORT_API bool  TessBasicOCR(char * fileName, char ** outText)
 	return true;
 }
 
-EXPORT_API   Boxa * TessGetComponentImagesFromFile(char * fileName, const tesseract::PageIteratorLevel level, const bool text_only, Pixa** pixa, int** blockids)
+EXPORT_API   Boxa * TessGetComponentImagesFromFile(char * fileName, const int level, const bool text_only, Pixa** pixa, int** blockids)
 {
 	if (nullptr == api || NULL == fileName)
 	{
@@ -126,31 +126,82 @@ EXPORT_API   Boxa * TessGetComponentImagesFromFile(char * fileName, const tesser
 	}
 	Pix *image = pixRead(fileName);
 	api->SetImage(image);
-	return api->GetComponentImages(level, text_only, pixa, blockids);
+	return api->GetComponentImages((tesseract::PageIteratorLevel)level, text_only, pixa, blockids);
 }
 
 
-EXPORT_API   Boxa * TessGetComponentImages(const tesseract::PageIteratorLevel level, const bool text_only, Pixa** pixa, int** blockids)
+EXPORT_API   Boxa * TessGetComponentImages(const int level, const bool text_only, Pixa** pixa, int** blockids)
 {
 	if (nullptr == api)
 	{
 		fprintf(stderr, "tesseract object is null.\n");
 		return NULL;
 	}
-	return api->GetComponentImages(level, text_only, pixa, blockids);
+	return api->GetComponentImages((tesseract::PageIteratorLevel)level, text_only, pixa, blockids);
 }
-
-
 
 EXPORT_API BOX * TessBoxaGetBox(BOXA *boxa, l_int32  index, l_int32  accessflag)
 {
 	return boxaGetBox(boxa, index, accessflag);
 }
 
+EXPORT_API void TessPixaDestroy(PIXA **ppixa)
+{
+	pixaDestroy(ppixa);
+}
+
 EXPORT_API PIX * TessPixaGetPix(PIXA *pixa, l_int32  index, l_int32  accesstype)
 {
 	return pixaGetPix(pixa, index, accesstype);
 }
+
+EXPORT_API BOXA * TessPixaGetBoxa(PIXA *pixa, l_int32 accesstype)
+{
+	return pixaGetBoxa(pixa, accesstype);
+}
+
+EXPORT_API BOX * TessPixaGetBox(PIXA *pixa, l_int32  index, l_int32  accesstype)
+{
+	return pixaGetBox(pixa, index, accesstype);
+}
+
+EXPORT_API void TessBoxDestroy(BOX **pbox)
+{
+	boxDestroy(pbox);
+}
+
+EXPORT_API PIX * TessPixCreate(l_int32  width, l_int32  height, l_int32  depth)
+{
+	return pixCreate(width, height, depth);
+}
+
+EXPORT_API void TessPixDestroy(PIX  **ppix)
+{
+	return pixDestroy(ppix);
+}
+
+
+//-------------------------直方图相关---------------------------
+
+EXPORT_API NUMA *TessPixGetGrayHistogram(PIX *pixs, l_int32  factor)
+{
+	return pixGetGrayHistogram(pixs, factor);	
+}
+
+EXPORT_API void TessNumaDestroy(NUMA **pna)
+{
+	numaDestroy(pna);
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
