@@ -58,6 +58,18 @@ EXPORT_API void TessSetImage(const unsigned char * imagedata, int width, int hei
 	}
 }
 
+EXPORT_API void TessSetImagePix(Pix* pix)
+{
+	if (nullptr == api) {
+		fprintf(stderr, "tesseract object is null.\n");
+		exit(1);
+	}
+	else
+	{
+		api->SetImage(pix);
+	}
+}
+
 EXPORT_API bool TessSetVariable(const char* name, const char* value)
 {
 	if (nullptr == api) {
@@ -82,7 +94,7 @@ EXPORT_API   char* TesseractRect(const unsigned char* imagedata,
 	}		
 }
 
-EXPORT_API void SetRectangle(int left, int top, int width, int height)
+EXPORT_API void TessSetRectangle(int left, int top, int width, int height)
 {
 	if (nullptr == api) {
 		fprintf(stderr, "tesseract object is null.\n");
@@ -173,12 +185,30 @@ EXPORT_API void TessBoxDestroy(BOX **pbox)
 EXPORT_API PIX * TessPixCreate(l_int32  width, l_int32  height, l_int32  depth)
 {
 	return pixCreate(width, height, depth);
+	
 }
 
 EXPORT_API void TessPixDestroy(PIX  **ppix)
 {
 	return pixDestroy(ppix);
 }
+
+EXPORT_API PIX * TessPixRead(const char  *filename)
+{
+	return pixRead(filename);
+}
+
+EXPORT_API PIX * TessPixCopy(PIX  *pixd, PIX * pix)
+{
+	return pixCopy(pixd, pix);
+}
+
+
+EXPORT_API int TessInitLangMod(const char* datapath, const char* language)
+{
+	return api->InitLangMod(datapath, language);
+}
+
 
 
 //-------------------------直方图相关---------------------------

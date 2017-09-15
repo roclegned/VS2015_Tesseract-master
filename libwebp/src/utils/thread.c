@@ -24,6 +24,8 @@
 typedef HANDLE pthread_t;
 typedef CRITICAL_SECTION pthread_mutex_t;
 
+#define _WIN32_WINNT 0x0501
+
 #if _WIN32_WINNT >= 0x0600  // Windows Vista / Server 2008 or greater
 #define USE_WINDOWS_CONDITION_VARIABLE
 typedef CONDITION_VARIABLE pthread_cond_t;
